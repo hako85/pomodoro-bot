@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ポモドーロBot 仕様書</title>
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      color: #333;
+      padding: 2rem;
+    }
+    h1, h2 {
+      color: #d63384;
+    }
+    .box {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    code {
+      background: #f8f9fa;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍓 ポモドーロBot 仕様書</h1>
+
+  <div class="box">
+    <h2>✨ 機能一覧</h2>
+    <ul>
+      <li>ポモドーロタイマー (Focus/Break/Long Break)</li>
+      <li>設定の保存と復元</li>
+      <li>Focus中の全員ミュート & YouTube BGM再生</li>
+      <li>Break中のミュート解除 & BGM停止</li>
+      <li>タイマー残り時間表示</li>
+      <li><code>!start</code> / <code>!stop</code> / <code>!set</code> / <code>!status</code> コマンド</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>🌸 使い方</h2>
+    <h3>1. 設定の確認・変更</h3>
+    <p><code>!status</code> で現在の設定と進行状況を確認できます。</p>
+    <p><code>!set</code> コマンドで設定変更：</p>
+    <ul>
+      <li><code>!set focus 25</code> → FOCUS時間を25分に設定</li>
+      <li><code>!set break 5</code> → BREAK時間を5分に設定</li>
+      <li><code>!set long_break 15</code> → LONG BREAK時間を15分に設定</li>
+      <li><code>!set cycles 4</code> → 4サイクルでLONG BREAK</li>
+      <li><code>!set youtube_url https://youtu.be/xxxxx</code> → BGMのYouTube URL設定</li>
+      <li><code>!set youtube_enabled true</code> → BGM再生ON</li>
+      <li><code>!set youtube_enabled false</code> → BGM再生OFF</li>
+    </ul>
+
+    <h3>2. タイマー開始</h3>
+    <p>VCに入ってから <code>!start</code> と入力</p>
+
+    <h3>3. タイマー停止</h3>
+    <p><code>!stop</code> でいつでもタイマー停止 & ミュート解除</p>
+  </div>
+
+  <div class="box">
+    <h2>💾 保存される設定</h2>
+    <ul>
+      <li>focus (FOCUS時間)</li>
+      <li>break (BREAK時間)</li>
+      <li>long_break (LONG BREAK時間)</li>
+      <li>cycles (1セットのサイクル数)</li>
+      <li>youtube_url (BGMのYouTube URL)</li>
+      <li>youtube_enabled (BGM再生ON/OFF)</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>🌟 補足</h2>
+    <ul>
+      <li>途中参加の人も自動でミュートされます。</li>
+      <li>BGMは <strong>yt_dlp</strong> で安定再生。</li>
+      <li>残り時間は <code>!status</code> で確認できます。</li>
+    </ul>
+  </div>
+
+  <p style="text-align: center; color: #d63384;">🐾 がんばるはこちゃんを応援するための、最強ポモドーロBotだよ！</p>
+</body>
+</html>
