@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ポモドーロBot 仕様書</title>
+  <title>🍓 ポモドーロBot 完全版仕様書 🍓</title>
   <style>
     body {
       background-color: #fff0f5;
       font-family: "Hiragino Kaku Gothic ProN", sans-serif;
       color: #333;
       padding: 2rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
     h1, h2 {
       color: #d63384;
+      text-align: center;
     }
     .box {
       background: #ffffff;
@@ -25,6 +28,7 @@
       background: #f8f9fa;
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
+      color: #d63384;
     }
     .logo {
       display: block;
@@ -33,68 +37,79 @@
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
+    ul {
+      padding-left: 1.5rem;
+    }
+    footer {
+      text-align: center;
+      color: #d63384;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
-  <h1>🍓 ポモドーロBot 仕様書</h1>
+  <h1>🍓 ポモドーロBot 完全版仕様書 🍓</h1>
 
   <img src="pomodoro_icon.png" alt="Pomodoro Bot Icon" class="logo">
 
   <div class="box">
     <h2>✨ 機能一覧</h2>
     <ul>
-      <li>ポモドーロタイマー (Focus/Break/Long Break)</li>
-      <li>設定の保存と復元</li>
-      <li>Focus中の全員ミュート & YouTube BGM再生</li>
-      <li>Break中のミュート解除 & BGM停止</li>
-      <li>タイマー残り時間表示</li>
-      <li><code>!start</code> / <code>!stop</code> / <code>!set</code> / <code>!status</code> コマンド</li>
+      <li>ポモドーロタイマー (Focus / Break / Long Break)</li>
+      <li>リアルタイム設定監視（設定変更時は即時反映）</li>
+      <li>Focus中のみ参加者をミュート & YouTube BGM再生</li>
+      <li>Break中にミュート解除 & BGM停止</li>
+      <li>設定保存と自動読み込み（再起動不要）</li>
+      <li>YouTubeの再生リスト対応 & リピート再生</li>
+      <li>DL失敗・エラー時は自動スキップ（安定動作）</li>
+      <li>DL完了前に即VC入室、DL後即再生</li>
     </ul>
   </div>
 
   <div class="box">
-    <h2>🌸 使い方</h2>
-    <h3>1. 設定の確認・変更</h3>
-    <p><code>!status</code> で現在の設定と進行状況を確認できます。</p>
-    <p><code>!set</code> コマンドで設定変更：</p>
+    <h2>🌸 コマンド一覧</h2>
     <ul>
-      <li><code>!set focus 25</code> → FOCUS時間を25分に設定</li>
-      <li><code>!set break 5</code> → BREAK時間を5分に設定</li>
-      <li><code>!set long_break 15</code> → LONG BREAK時間を15分に設定</li>
-      <li><code>!set cycles 4</code> → 4サイクルでLONG BREAK</li>
-      <li><code>!set youtube_url https://youtu.be/xxxxx</code> → BGMのYouTube URL設定</li>
-      <li><code>!set youtube_enabled true</code> → BGM再生ON</li>
-      <li><code>!set youtube_enabled false</code> → BGM再生OFF</li>
+      <li><code>!start</code>：VCに即入室し、ポモドーロ開始</li>
+      <li><code>!stop</code>：タイマーと音楽停止（VCは維持）</li>
+      <li><code>!leave</code>：VCから退出し、タイマーを完全停止</li>
+      <li><code>!status</code>：現在の設定と進行状況を表示</li>
+      <li><code>!set &lt;項目&gt; &lt;値&gt;</code>：設定変更を即反映<br>
+        <small>（例）<code>!set focus 25</code>, <code>!set youtube_url URL</code></small></li>
     </ul>
-
-    <h3>2. タイマー開始</h3>
-    <p>VCに入ってから <code>!start</code> と入力</p>
-
-    <h3>3. タイマー停止</h3>
-    <p><code>!stop</code> でいつでもタイマー停止 & ミュート解除</p>
   </div>
 
   <div class="box">
     <h2>💾 保存される設定</h2>
     <ul>
-      <li>focus (FOCUS時間)</li>
-      <li>break (BREAK時間)</li>
-      <li>long_break (LONG BREAK時間)</li>
-      <li>cycles (1セットのサイクル数)</li>
-      <li>youtube_url (BGMのYouTube URL)</li>
-      <li>youtube_enabled (BGM再生ON/OFF)</li>
+      <li><code>focus</code> (Focus時間：分)</li>
+      <li><code>break</code> (Break時間：分)</li>
+      <li><code>long_break</code> (Long Break時間：分)</li>
+      <li><code>cycles</code> (1セット内のサイクル数)</li>
+      <li><code>youtube_url</code> (BGMのYouTube URL)</li>
+      <li><code>youtube_enabled</code> (BGM再生のON/OFF)</li>
     </ul>
   </div>
 
   <div class="box">
-    <h2>🌟 補足</h2>
+    <h2>🌟 動作環境</h2>
     <ul>
-      <li>途中参加の人も自動でミュートされます。</li>
-      <li>BGMは <strong>yt_dlp</strong> で安定再生。</li>
-      <li>残り時間は <code>!status</code> で確認できます。</li>
+      <li>Windows 10/11 推奨</li>
+      <li>ffmpeg（最新版）を同梱</li>
+      <li><strong>yt_dlp</strong> でBGMを安定ダウンロード</li>
     </ul>
   </div>
 
-  <p style="text-align: center; color: #d63384;">🐾 がんばるはこーらを応援するための、最強ポモドーロBotだよ！</p>
+  <div class="box">
+    <h2>🐾 補足情報</h2>
+    <ul>
+      <li>途中参加者も自動でミュートされます。</li>
+      <li>設定変更後、botの再起動は不要です。</li>
+      <li>Bot自身はミュートされません。</li>
+      <li>エラー発生時は自動で回避します。</li>
+    </ul>
+  </div>
+
+  <footer>🐾 がんばるはこーらを応援するための、最強ポモドーロBotだよ！ 🍓✨</footer>
 </body>
 </html>
