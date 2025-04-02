@@ -2,114 +2,80 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍓 ポモドーロBot 完全版仕様書 🍓</title>
+  <title>🍅 Pomodoro Bot - README</title>
   <style>
     body {
-      background-color: #fff0f5;
-      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
-      color: #333;
-      padding: 2rem;
-      max-width: 700px;
-      margin: 0 auto;
+      background-color: #ffe4e9;
+      color: #4a2c2a;
+      font-family: 'Arial', sans-serif;
+      margin: 2rem;
     }
     h1, h2 {
-      color: #d63384;
-      text-align: center;
+      color: #d94f70;
     }
-    .box {
-      background: #ffffff;
-      border-radius: 12px;
+    .card {
+      background-color: #fff0f5;
+      border: 2px solid #d94f70;
+      border-radius: 1rem;
       padding: 1rem;
       margin-bottom: 1rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(217, 79, 112, 0.2);
     }
     code {
-      background: #f8f9fa;
+      background-color: #fddde6;
       padding: 0.2rem 0.4rem;
-      border-radius: 4px;
-      color: #d63384;
-    }
-    .logo {
-      display: block;
-      margin: 0 auto 1rem;
-      max-width: 200px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    ul {
-      padding-left: 1.5rem;
-    }
-    footer {
-      text-align: center;
-      color: #d63384;
-      margin-top: 2rem;
-      font-size: 0.9rem;
+      border-radius: 0.3rem;
     }
   </style>
 </head>
 <body>
-  <h1>🍓 ポモドーロBot 完全版仕様書 🍓</h1>
+  <h1>🍅 Pomodoro Bot - README</h1>
 
-  <img src="pomodoro_icon.png" alt="Pomodoro Bot Icon" class="logo">
-
-  <div class="box">
-    <h2>✨ 機能一覧</h2>
+  <div class="card">
+    <h2>🌟 機能一覧</h2>
     <ul>
-      <li>ポモドーロタイマー (Focus / Break / Long Break)</li>
-      <li>リアルタイム設定監視（設定変更時は即時反映）</li>
-      <li>Focus中のみ参加者をミュート & YouTube BGM再生</li>
-      <li>Break中にミュート解除 & BGM停止</li>
-      <li>設定保存と自動読み込み（再起動不要）</li>
-      <li>YouTubeの再生リスト対応 & リピート再生</li>
-      <li>DL失敗・エラー時は自動スキップ（安定動作）</li>
-      <li>DL完了前に即VC入室、DL後即再生</li>
+      <li>VCに参加し、<strong>ポモドーロタイマー</strong>を開始</li>
+      <li>Focusタイム中は<strong>全員強制ミュート</strong></li>
+      <li>Breakタイム中は<strong>ミュート解除</strong></li>
+      <li>Focusタイム中に<strong>YouTube音楽再生</strong>（途中停止・途中再開対応）</li>
+      <li>設定内容は<strong>settings.json</strong>に保存され、次回起動時に引き継ぎ</li>
     </ul>
   </div>
 
-  <div class="box">
-    <h2>🌸 コマンド一覧</h2>
+  <div class="card">
+    <h2>📝 使い方</h2>
     <ul>
-      <li><code>!start</code>：VCに即入室し、ポモドーロ開始</li>
-      <li><code>!stop</code>：タイマーと音楽停止（VCは維持）</li>
-      <li><code>!leave</code>：VCから退出し、タイマーを完全停止</li>
-      <li><code>!status</code>：現在の設定と進行状況を表示</li>
-      <li><code>!set &lt;項目&gt; &lt;値&gt;</code>：設定変更を即反映<br>
-        <small>（例）<code>!set focus 25</code>, <code>!set youtube_url URL</code></small></li>
+      <li><code>!start</code> : タイマー開始</li>
+      <li><code>!stop</code> : タイマー停止</li>
+      <li><code>!leave</code> : VCから退出</li>
+      <li><code>!set &lt;key&gt; &lt;value&gt;</code> : 設定変更<br>
+        例：<code>!set focus 30</code> / <code>!set music_url https://youtu.be/xxxx</code><br>
+        対応キー：<code>focus</code>, <code>break</code>, <code>longbreak</code>, <code>interval</code>, <code>music_url</code>
+      </li>
+      <li><code>!status</code> : 現在の設定と状態確認</li>
     </ul>
   </div>
 
-  <div class="box">
-    <h2>💾 保存される設定</h2>
+  <div class="card">
+    <h2>⚙️ 動作仕様</h2>
     <ul>
-      <li><code>focus</code> (Focus時間：分)</li>
-      <li><code>break</code> (Break時間：分)</li>
-      <li><code>long_break</code> (Long Break時間：分)</li>
-      <li><code>cycles</code> (1セット内のサイクル数)</li>
-      <li><code>youtube_url</code> (BGMのYouTube URL)</li>
-      <li><code>youtube_enabled</code> (BGM再生のON/OFF)</li>
+      <li>Focusタイム：指定した分数だけ全員ミュート＆音楽再生</li>
+      <li>Breakタイム：全員ミュート解除</li>
+      <li>Interval回数分のFocus/Break終了後、Long Breakタイムが開始</li>
+      <li><strong>settings.json</strong>内で設定値・Botトークンを管理</li>
+      <li>コマンド入力ミス時は丁寧にエラーメッセージを表示</li>
     </ul>
   </div>
 
-  <div class="box">
-    <h2>🌟 動作環境</h2>
+  <div class="card">
+    <h2>💡 注意事項</h2>
     <ul>
-      <li>Windows 10/11 推奨</li>
-      <li>ffmpeg（最新版）を同梱</li>
-      <li><strong>yt_dlp</strong> でBGMを安定ダウンロード</li>
+      <li>音楽再生には <strong>ffmpeg</strong>, <strong>yt_dlp</strong> が必要です（インストール済みならOK）</li>
+      <li>一部著作権制限付きのYouTube動画は再生できない場合があります</li>
+      <li>多人数・複数サーバー対応が必要な場合は Lavalink版を推奨</li>
     </ul>
   </div>
 
-  <div class="box">
-    <h2>🐾 補足情報</h2>
-    <ul>
-      <li>途中参加者も自動でミュートされます。</li>
-      <li>設定変更後、botの再起動は不要です。</li>
-      <li>Bot自身はミュートされません。</li>
-      <li>エラー発生時は自動で回避します。</li>
-    </ul>
-  </div>
-
-  <footer>🐾 がんばるはこーらを応援するための、最強ポモドーロBotだよ！ 🍓✨</footer>
+  <p style="text-align:center; color:#d94f70; font-weight:bold;">🍅 Happy Pomodoro Life! 🍅</p>
 </body>
 </html>
